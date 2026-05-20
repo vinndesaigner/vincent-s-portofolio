@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincent - Professional Portfolio for SSAU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CORE SETUP */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #050b18; color: #ffffff; font-family: 'Lato', sans-serif; overflow-x: hidden; }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #0a1122;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            margin: 20px auto;
+            border: 1px solid #1e293b;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* BACKGROUND ELEMENTS */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 60px;
+            right: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, #00f2ff, transparent);
+            opacity: 0.3;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; color: #ffffff; }
+        h1 { font-size: 72px; line-height: 1.1; margin-bottom: 20px; }
+        .slide-title { font-size: 42px; margin-bottom: 40px; text-align: left; position: relative; color: #00f2ff; }
+        .slide-title::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 60px; height: 4px; background: #00f2ff; }
+        p, li { font-size: 20px; line-height: 1.6; color: #cbd5e1; }
+        strong { color: #00f2ff; }
+
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; z-index: 1; }
+
+        /* LAYOUTS */
+        .title-layout { text-align: center; justify-content: center; align-items: center; height: 100%; }
+        .title-layout h1 span { color: #00f2ff; }
+        .subtitle { font-size: 24px; color: #94a3b8; max-width: 800px; margin: 0 auto; }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; width: 100%; }
+        
+        .image-wrapper { border-radius: 16px; overflow: hidden; border: 1px solid rgba(0, 242, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); height: 400px; background: #ffffff; }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .image-wrapper embed { width: 100%; height: 100%; }
+
+        .tiled-content { display: flex; gap: 30px; width: 100%; }
+        .tile { flex: 1; background: rgba(30, 41, 59, 0.5); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .tile .icon { font-size: 48px; color: #00f2ff; margin-bottom: 20px; }
+        .tile h3 { margin-bottom: 15px; font-size: 26px; }
+
+        .bleed-image-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; padding: 0 !important; }
+        .bleed-text-side { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; height: 720px; }
+        .bleed-image-side { height: 720px; width: 100%; object-fit: cover; }
+
+        .highlight-numbers-layout .number { font-size: 140px; color: #00f2ff; font-weight: 700; line-height: 1; }
+        .number-label { font-size: 28px; color: #94a3b8; }
+
+        /* TABLE CSS (FIXED 100% WHITE TEXT) */
+        .table-layout table { width: 100%; border-collapse: collapse; background: rgba(15, 23, 42, 0.8); border-radius: 12px; overflow: hidden; border: 1px solid #1e293b; }
+        .table-layout th { background: #1e293b; padding: 20px; text-align: left; color: #00f2ff !important; font-size: 22px; font-family: 'Poppins', sans-serif; }
+        .table-layout td { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffffff !important; font-size: 18px; }
+        .table-layout tr:hover td { background: rgba(0, 242, 255, 0.05); }
+
+        /* CHARTS */
+        .chart-container { width: 100%; display: flex; flex-direction: column; gap: 20px; }
+        .bar { display: flex; align-items: center; gap: 20px; }
+        .bar .label { width: 250px; text-align: right; font-weight: 600; color: #94a3b8; }
+        .bar-inner { flex-grow: 1; background: #1e293b; height: 40px; border-radius: 20px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #00f2ff, #0066ff); display: flex; align-items: center; justify-content: flex-end; padding-right: 15px; font-weight: 700; font-size: 16px; }
+
+        /* TIMELINE */
+        .timeline-layout { position: relative; height: 400px; display: flex; justify-content: space-between; align-items: center; margin-top: 50px; }
+        .timeline-line { position: absolute; top: 50%; left: 0; width: 100%; height: 4px; background: #1e293b; z-index: 0; }
+        .timeline-item { position: relative; width: 20%; text-align: center; z-index: 1; }
+        .timeline-item::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background: #00f2ff; border-radius: 50%; border: 4px solid #050b18; }
+        .timeline-content { position: absolute; width: 200px; left: 50%; transform: translateX(-50%); }
+        .timeline-item:nth-child(odd) .timeline-content { bottom: 50px; }
+        .timeline-item:nth-child(even) .timeline-content { top: 50px; }
+        .timeline-content h3 { color: #00f2ff; font-size: 22px; margin-bottom: 8px; }
+
+        .quote-layout { text-align: center; max-width: 900px; margin: 0 auto; }
+        blockquote { font-size: 48px; font-family: 'Poppins'; font-style: italic; margin-bottom: 30px; position: relative; }
+        blockquote::before { content: '"'; font-size: 120px; color: rgba(0, 242, 255, 0.2); position: absolute; left: -60px; top: -40px; }
+        cite { font-size: 24px; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container" id="slide1">
+        <div class="title-layout content-area">
+            <h1>Mission: <span>Aerospace</span><br>Researcher Profile</h1>
+            <p class="subtitle">A Technical Dossier on IAAC Pre-Finalist Excellence and Advanced Cybersecurity Auditing. Prepared for Samara University (SSAU).</p>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide2">
+        <h2 class="slide-title">Executive Profile</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>Vincent Lie Ginansyah</h3>
+                    <p>High-performing technical student specializing in the intersection of <strong>Aerospace Engineering</strong> and <strong>Digital Security</strong>.</p>
+                    <ul style="list-style: none; margin-top: 20px;">
+                        <li><i class="fas fa-check-circle" style="color:#00f2ff; margin-right:10px;"></i> SMK Plus Pelita Nusantara (Vocational IT)</li>
+                        <li><i class="fas fa-check-circle" style="color:#00f2ff; margin-right:10px;"></i> International IAAC Pre-Finalist</li>
+                        <li><i class="fas fa-check-circle" style="color:#00f2ff; margin-right:10px;"></i> Independent Security Researcher</li>
+                    </ul>
+                </div>
+                <div class="image-wrapper" style="background: transparent;">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vincent Profile">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide3">
+        <h2 class="slide-title">Academic Credentials</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>International Validation</h3>
+                    <p>Proven analytical and problem-solving skills demonstrated through international competitions.</p>
+                    <ul style="list-style: none; margin-top: 20px;">
+                        <li><i class="fas fa-award" style="color:#00f2ff; margin-right:10px;"></i> <strong>IAAC Pre-Finalist:</strong> Verified theoretical capability and commitment to high-level scientific research.</li>
+                        <li><i class="fas fa-shield-alt" style="color:#00f2ff; margin-right:10px;"></i> <strong>Cybersecurity Competence:</strong> Active preparation for offensive security challenges.</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 18px; color: #94a3b8;">
+                        *This foundation in mathematical logic directly translates to my methodical approach in cybersecurity auditing.*
+                    </p>
+                </div>
+                <div class="image-wrapper" style="border: 2px solid #00f2ff; padding: 5px;">
+                    <embed src="Vincent_IAAC_Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container bleed-image-layout" id="slide4">
+        <div class="bleed-text-side">
+            <h2 class="slide-title">Astronomy Achievement</h2>
+            <h3>Qualified Pre-Finalist 2026</h3>
+            <p>Successfully passed the Qualification Round, demonstrating advanced analytical capability in astrophysics and celestial mechanics under competitive pressure.</p>
+            <p>This proven ability to solve complex theoretical problems is a core skill required for the <strong>Rocket Complexes</strong> program at SSAU.</p>
+        </div>
+        <div class="image-container">
+            <img class="bleed-image-side" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Astronomy Nebula">
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <h2 class="slide-title">Digital Defense Expertise</h2>
+        <div class="content-area">
+            <div class="tiled-content">
+                <div class="tile">
+                    <div class="icon"><i class="fas fa-bug"></i></div>
+                    <h3>Bug Bounty</h3>
+                    <p>Successfully identified and reported vulnerabilities in complex web infrastructures, ensuring data integrity and system safety.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fas fa-shield-halved"></i></div>
+                    <h3>System Audit</h3>
+                    <p>Conducting systematic reconnaissance and vulnerability assessments to identify potential entry points in large-scale networks.</p>
+                </div>
+                <div class="tile">
+                    <div class="icon"><i class="fas fa-user-secret"></i></div>
+                    <h3>Ethical Hacking</h3>
+                    <p>Proficient in Linux, passive recon, and advanced scanning tools to map the "attack surface" of high-value targets.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide6">
+        <h2 class="slide-title">Future at Samara University</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>Rocket Complexes & Astronautics</h3>
+                    <p>Samara University (SSAU) represents the pinnacle of aerospace education. My goal is to apply my dual expertise to ensure the <strong>digital safety</strong> of future space missions.</p>
+                    <p style="margin-top: 15px;">I aim to contribute to the prestigious aerospace laboratories and research groups, focusing on the security of mission-critical systems.</p>
+                </div>
+                <div class="image-wrapper" style="height: 450px; background: transparent;">
+                    <img src="https://images.unsplash.com/photo-1541888069550-681944583151?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SSAU Campus" style="object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide7">
+        <h2 class="slide-title">Performance Report</h2>
+        <div class="content-area">
+            <div class="two-column">
+                <div>
+                    <h3>Data-Driven Excellence</h3>
+                    <p>My official performance report highlights analytical speed, logic, and consistent scoring across complex theoretical modules.</p>
+                    <p style="margin-top: 20px;">This report acts as the "Quantitative Proof" of my readiness for advanced aerospace engineering and rigorous academic research at SSAU.</p>
+                </div>
+                <div class="image-wrapper" style="border: 2px solid #00f2ff; padding: 5px;">
+                    <embed src="Vincent_IAAC_Performance_Report.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide8">
+        <h2 class="slide-title">Security Audit Portfolio</h2>
+        <div class="content-area">
+            <div class="table-layout">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Area of Expertise</th>
+                            <th>Subdomain Analysis</th>
+                            <th>Methodology</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Asset Discovery</strong></td>
+                            <td>1,710 SSAU Subdomains</td>
+                            <td>Passive Recon (Subfinder)</td>
+                            <td style="color: #00f2ff !important; font-weight: bold;">High</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Service Mapping</strong></td>
+                            <td>Research & Lab Portals</td>
+                            <td>Live Target Validation (httpx)</td>
+                            <td style="color: #eab308 !important; font-weight: bold;">Medium</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security Auditing</strong></td>
+                            <td>Dev/Staging Environments</td>
+                            <td>Manual Header & Version Analysis</td>
+                            <td style="color: #ef4444 !important; font-weight: bold;">Critical</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Network Mapping</strong></td>
+                            <td>DNS Infrastructure</td>
+                            <td>Record Enumeration & Triaging</td>
+                            <td style="color: #00f2ff !important; font-weight: bold;">High</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide9">
+        <h2 class="slide-title">Technical Proficiency</h2>
+        <div class="content-area">
+            <div class="chart-container">
+                <div class="bar">
+                    <div class="label">Astrophysics Logic</div>
+                    <div class="bar-inner"><div class="bar-fill" style="width: 85%;">85%</div></div>
+                </div>
+                <div class="bar">
+                    <div class="label">Cybersecurity Audit</div>
+                    <div class="bar-inner"><div class="bar-fill" style="width: 92%;">92%</div></div>
+                </div>
+                <div class="bar">
+                    <div class="label">Linux & Networking</div>
+                    <div class="bar-inner"><div class="bar-fill" style="width: 80%;">80%</div></div>
+                </div>
+                <div class="bar">
+                    <div class="label">Mathematical Modeling</div>
+                    <div class="bar-inner"><div class="bar-fill" style="width: 80%;">80%</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide10">
+        <h2 class="slide-title">Project Deep-Dive</h2>
+        <div class="content-area">
+            <div class="tiled-content">
+                <div class="tile" style="padding: 0; overflow: hidden; background: none;">
+                    <div class="image-wrapper" style="height: 300px; margin-bottom: 20px; background: transparent;">
+                        <img src="https://images.unsplash.com/photo-1517976487492-5750f3195933?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rocket Tech">
+                    </div>
+                    <p style="text-align: center; padding: 0 10px;">Deep dive into <strong>Rocket Propulsion Systems</strong> and hardware security.</p>
+                </div>
+                <div class="tile" style="padding: 0; overflow: hidden; background: none;">
+                    <div class="image-wrapper" style="height: 300px; margin-bottom: 20px; background: transparent;">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Security Data">
+                    </div>
+                    <p style="text-align: center; padding: 0 10px;">Protecting the <strong>Aerospace Infrastructure</strong> from sophisticated cyber-threats.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide11">
+        <h2 class="slide-title">Mission Roadmap</h2>
+        <div class="content-area">
+            <div class="timeline-layout">
+                <div class="timeline-line"></div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Foundation</h3>
+                        <p>Mastering technical core & offensive security operations.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Validation</h3>
+                        <p>IAAC Pre-Finalist status & Real-world Asset Reconnaissance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Integration</h3>
+                        <p>2027 Target Admission to Samara University.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Leadership</h3>
+                        <p>Expert in Aerospace Security Systems in Russia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide12">
+        <div class="content-area quote-layout">
+            <blockquote>The future of space exploration depends as much on the security of our data as it does on the thrust of our engines.</blockquote>
+            <cite>— Vincent, Future Researcher</cite>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide13">
+        <div class="title-layout content-area" style="text-align: center;">
+            <h2 style="font-size: 80px; margin-bottom: 30px;">Thank You!</h2>
+            <p style="font-size: 28px;">Open for Academic Collaboration & Security Audits</p>
+            <div style="margin-top: 40px; font-size: 24px; color: #00f2ff;">
+                <i class="fab fa-telegram" style="margin-right: 15px;"></i> Telegram: @vincenqt
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
